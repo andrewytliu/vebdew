@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "vebdew"
   gem.homepage = "http://github.com/eggegg/vebdew"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{HTML5 slides generator}
+  gem.description = %Q{Generate HTML5 slides}
   gem.email = "andrewliu33@gmail.com"
   gem.authors = ["Andrew Liu"]
   # dependencies defined in Gemfile
