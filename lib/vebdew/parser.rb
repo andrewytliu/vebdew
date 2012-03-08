@@ -18,6 +18,9 @@ module Vebdew
       for raw_line in @lines
         line = raw_line.lstrip
 
+        # special case for no enders
+        close_flag :ul if @flag[:ul] and !line.match(/^\* (.+)/)
+
         case line
         when /^:(\w+) (.*)$/
           command $1, $2
@@ -60,6 +63,9 @@ module Vebdew
           if tagged and !tagged.empty?
             @body << "<h1>#{tagged.strip}</h1>"
           end
+        when /^\* (.+)/
+          start_flag :ul unless @flag[:ul]
+          @body << "<li>#{format_content($1)}</li>"
         else
           @buffer << raw_line
         end
@@ -71,6 +77,8 @@ module Vebdew
 
     def command type, body
       case type
+      when "title"
+        @header << %Q{<title>#{body}</title>}
       when "description"
         @header << %Q{<meta name="description" content="#{body}">}
       when "author"
@@ -92,15 +100,15 @@ module Vebdew
 
     def close_buffer
       return if @buffer.empty?
-      @body << "<p>"
+      format_buffer
       @body += @buffer
-      @body << "</p>"
       @buffer.clear
     end
 
     START_STR = { :slide => "<section>",
                   :stack => "<section>",
-                  :code => "<script type='text/x-sample'>" }
+                  :code => "<script type='text/x-sample'>",
+                  :ul => "<ul>" }
 
     def start_flag flag
       @body << START_STR[flag]
@@ -109,11 +117,27 @@ module Vebdew
 
     CLOSE_STR = { :slide => "</section>",
                   :stack => "</section>",
-                  :code => "</script>" }
+                  :code => "</script>",
+                  :ul => "</ul>" }
 
     def close_flag flag
       @body << CLOSE_STR[flag] if @flag[flag]
       @flag[flag] = false
+    end
+
+    def format_buffer
+      @buffer.map! do |buf|
+        "<p>#{format_content(buf)}</p>"
+      end
+    end
+
+    def format_content str
+      str.strip!
+      str.gsub! /`(([^\\`]|\\.)*)`/, %q{<code>\1</code>}
+      str.gsub! /\!\[([^\]]+)\]\(([^\)]+)\)/, %q{<img src='\1' alt='\2'>}
+      str.gsub! /\!\[([^\]]+)\]/, %q{<img src='\1'>}
+      str.gsub! /\[([^\]]+)\]\(([^\)]+)\)/, %q{<a href='\1'>\2</a>}
+      str
     end
   end
 end
