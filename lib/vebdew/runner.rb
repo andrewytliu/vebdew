@@ -1,13 +1,11 @@
-require 'parser'
-
 module Vebdew
   module Runner
     module_function
 
-    def generate input, output
-      File.open(output, "w") do |f|
-        f.write Parser.new(input).to_html
-      end
+    def generate vew, erb, html
+      parser = Parser.new(IO.readlines(vew))
+      result = Formatter.new(parser, File.read(erb)).to_html
+      File.open(html, "w") { |f| f.write result }
     end
   end
 end

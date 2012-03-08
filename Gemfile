@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "kramdown"
+gem "erubis"
 
 group :development do
   gem "shoulda", ">= 0"
