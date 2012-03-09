@@ -49,6 +49,9 @@ module Vebdew
             close_buffer
             start_flag :code
           end
+        when /^(#+) (.*)/
+          level = $1.size
+          @body << "<h#{level}>#{$2}</h#{level}>"
         when /^-+/
           tagged = @buffer.pop
           close_buffer
