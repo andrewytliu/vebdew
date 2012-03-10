@@ -152,6 +152,10 @@ module Vebdew
       str
     end
 
+    def escape_html str
+      str.gsub(/>/, "&gt;").gsub(/</, "&lt;")
+    end
+
     def format_buffer
       @buffer.map! do |buf|
         "<p#{append}>#{format_content(buf)}</p>"
@@ -160,7 +164,7 @@ module Vebdew
 
     def format_content str
       str.strip!
-      str.gsub! /`(([^\\`]|\\.)*)`/, %q{<code>\1</code>}
+      str.gsub!(/`(([^\\`]|\\.)*)`/) {%Q{<code>#{escape_html($1)}</code>}}
       str.gsub! /\!\[([^\]]+)\]\(([^\)]+)\)/, %q{<img src='\1' alt='\2'>}
       str.gsub! /\!\[([^\]]+)\]/, %q{<img src='\1'>}
       str.gsub! /\[([^\]]+)\]\(([^\)]+)\)/, %q{<a href='\1'>\2</a>}

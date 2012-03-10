@@ -10,7 +10,7 @@
 :javascript_include_tag js/jquery.min.js
 :javascript_include_tag https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js
 :javascript_include_tag js/reveal.js, lib/highlight.js, js/ruler.js, js/sample.js
-:javascript_include_tag js/index.js
+:javascript_include_tag js/init.js, js/index.js
 
 !SLIDE
 
