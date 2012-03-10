@@ -25,15 +25,7 @@ when /new/
 when /generate|g/
   Vebdew::Runner.generate
 when /compile|c/
-  vew, erb, html = ARGV[1], ARGV[2], ARGV[3]
-
-  if !File.exist?(vew)
-    puts "Vew file doesn't exist!"
-  elsif !File.exist?(erb)
-    puts "Erb template doesn't exist!"
-  else
-    Vebdew::Runner.compile vew, erb, html
-  end
+  Vebdew::Runner.compile ARGV[1], ARGV[2], ARGV[3]
 else
   puts usage
 end
