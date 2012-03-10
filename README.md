@@ -50,7 +50,7 @@ Current slide is closed and a new slide is created when a `!SLIDE` token is enco
 Marks the starting and ending of a stack (vertical slide stack). Rules are the same as `!SLIDE` and `!ENDSLIDE`.
 
 ### Code spans & code blocks
-Code spans are wrapped by ``. This emits a `<code>` block. Brackets (<, >) are escaped to &lt; and &gt; automatically. To output a `\`` charactor, escape it like `\\\``.
+Code spans are wrapped by `\`\``. This emits a `<code>` block. Brackets (<, >) are escaped to &lt; and &gt; automatically. To output a `\`` charactor, escape it like `\\\``.
 
 Two types of code blocks are supported here. The code blocks wrapped in three or more `\``s. This kind of code blocks emits `<code>...</code>`. The second kind is wrapped in three or more `~`s. This kind of code blocks emits `<script type="text/x-sample">...</script>`, which makes uses of sample.js.
 
