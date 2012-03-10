@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "vebdew"
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Liu"]
@@ -26,6 +26,34 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/vebdew",
+    "lib/template/css/images/ui-bg_flat_0_aaaaaa_40x100.png",
+    "lib/template/css/images/ui-bg_glass_95_fef1ec_1x400.png",
+    "lib/template/css/images/ui-bg_gloss-wave_16_121212_500x100.png",
+    "lib/template/css/images/ui-bg_highlight-hard_15_888888_1x100.png",
+    "lib/template/css/images/ui-bg_highlight-hard_55_555555_1x100.png",
+    "lib/template/css/images/ui-bg_highlight-soft_35_adadad_1x100.png",
+    "lib/template/css/images/ui-bg_highlight-soft_60_dddddd_1x100.png",
+    "lib/template/css/images/ui-bg_inset-soft_15_121212_1x100.png",
+    "lib/template/css/images/ui-icons_666666_256x240.png",
+    "lib/template/css/images/ui-icons_aaaaaa_256x240.png",
+    "lib/template/css/images/ui-icons_bbbbbb_256x240.png",
+    "lib/template/css/images/ui-icons_c98000_256x240.png",
+    "lib/template/css/images/ui-icons_cccccc_256x240.png",
+    "lib/template/css/images/ui-icons_cd0a0a_256x240.png",
+    "lib/template/css/images/ui-icons_f29a00_256x240.png",
+    "lib/template/css/jquery-ui.css",
+    "lib/template/css/main.css",
+    "lib/template/css/reset.css",
+    "lib/template/css/ruler.css",
+    "lib/template/css/sample.css",
+    "lib/template/css/styles.css",
+    "lib/template/js/index.js",
+    "lib/template/js/init.js",
+    "lib/template/js/jquery-ui.min.js",
+    "lib/template/js/jquery.min.js",
+    "lib/template/js/reveal.js",
+    "lib/template/js/ruler.js",
+    "lib/template/js/sample.js",
     "lib/template/vew/sample.vew",
     "lib/template/vew/template.erb",
     "lib/vebdew.rb",
