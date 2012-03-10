@@ -15,35 +15,47 @@ module Vebdew
     end
 
   protected
+    CMD        = /^:(\w+) (.*)$/
+    SLIDE      = /^\!SLIDE/
+    ENDSLIDE   = /^\!ENDSLIDE/
+    STACK      = /^\!STACK/
+    ENDSTACK   = /^\!ENDSTACK/
+    SELECTOR   = /\{:([^\}]+)\}$/
+    CURLY_BAR  = /^~+/
+    SINGLE_BAR = /^-+/
+    DOUBLE_BAR = /^=+/
+    SHARP      = /^(#+) (.*)/
+    UL         = /^\* (.+)/
+
     def parse
       for raw_line in @lines
         line = raw_line.lstrip
 
         # special case for no enders
-        close_flag :ul if @flag[:ul] and !line.match(/^\* (.+)/)
+        close_flag :ul if @flag[:ul] and !line.match(UL)
 
         case line
-        when /^:(\w+) (.*)$/
+        when CMD
           command $1, $2
-        when /^\!SLIDE/
+        when SLIDE
           close_buffer
           close_flag :slide
           start_flag :slide
-        when /^\!ENDSLIDE/
+        when ENDSLIDE
           close_buffer
           close_flag :slide
-        when /^\!STACK/
+        when STACK
           close_buffer
           close_flag :slide
           close_flag :stack
           start_flag :stack
-        when /^\!ENDSTACK/
+        when ENDSTACK
           close_buffer
           close_flag :slide
           close_flag :stack
-        when /\{:([^\}]+)\}/
+        when SELECTOR
           selector $1
-        when /^~+/
+        when CURLY_BAR
           if @flag[:code]
             @body << @buffer.join
             @buffer.clear
@@ -52,10 +64,10 @@ module Vebdew
             close_buffer
             start_flag :code
           end
-        when /^(#+) (.*)/
+        when SHARP
           level = $1.size
           @body << "<h#{level}#{append}>#{$2}</h#{level}>"
-        when /^-+/
+        when SINGLE_BAR
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
@@ -63,13 +75,13 @@ module Vebdew
           else
             @body << "<hr#{append}>"
           end
-        when /^=+/
+        when DOUBLE_BAR
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
             @body << "<h1#{append}>#{tagged.strip}</h1>"
           end
-        when /^\* (.+)/
+        when UL
           start_flag :ul unless @flag[:ul]
           @body << "<li#{append}>#{format_content($1)}</li>"
         else
@@ -79,6 +91,7 @@ module Vebdew
       close_buffer
       close_flag :slide
       close_flag :stack
+      close_flag :ul
     end
 
     def command type, body
@@ -133,10 +146,14 @@ module Vebdew
       @flag[flag] = false
     end
 
+    SEL_CLASS = /\.([^\.\[#]+)/
+    SEL_ID    = /#([^\.\[#]+)/
+    SEL_ATTR  = /\[([^\.\]=#]+)=([^\.\]]+)\]/
+
     def selector str
-      klass = str.scan(/\.([^\.\[#]+)/).flatten
-      id = str.scan(/#([^\.\[#])+/).flatten
-      attrs = str.scan(/\[([^\.\]=#]+)=([^\.\]]+)\]/)
+      klass = str.scan(SEL_CLASS).flatten
+      id = str.scan(SEL_ID).flatten
+      attrs = str.scan(SEL_ATTR)
 
       @attrs = ""
       @attrs += " class='#{klass.join(' ')}'" unless klass.empty?
@@ -152,8 +169,11 @@ module Vebdew
       str
     end
 
+    HTML_GT = />/
+    HTML_LT = /</
+
     def escape_html str
-      str.gsub(/>/, "&gt;").gsub(/</, "&lt;")
+      str.gsub(HTML_GT, "&gt;").gsub(HTML_LT, "&lt;")
     end
 
     def format_buffer
@@ -162,12 +182,31 @@ module Vebdew
       end
     end
 
+    INL_SELECTOR = /\{:([^\}]+)\}/
+    INL_CODE     = /`(([^\\`]|\\.)*)`/
+    INL_IMG_ALT  = /\!\[([^\]]+)\]\(([^\)]+)\)/
+    INL_IMG      = /\!\[([^\]]+)\]/
+    INL_A        = /\[([^\]]+)\]\(([^\)]+)\)/
+
     def format_content str
       str.strip!
-      str.gsub!(/`(([^\\`]|\\.)*)`/) {%Q{<code>#{escape_html($1)}</code>}}
-      str.gsub! /\!\[([^\]]+)\]\(([^\)]+)\)/, %q{<img src='\1' alt='\2'>}
-      str.gsub! /\!\[([^\]]+)\]/, %q{<img src='\1'>}
-      str.gsub! /\[([^\]]+)\]\(([^\)]+)\)/, %q{<a href='\1'>\2</a>}
+      loop do
+        case str
+        when INL_SELECTOR
+          selector $1
+          str.sub!(INL_SELECTOR, "")
+        when INL_CODE
+          str.sub!(INL_CODE) {%Q{<code#{append}>#{escape_html($1)}</code>}}
+        when INL_IMG_ALT
+          str.sub!(INL_IMG_ALT) {%Q{<img src='#{$1}' alt='#{$2}'#{append}>}}
+        when INL_IMG
+          str.sub!(INL_IMG) {%Q{<img src='#{$1}'#{append}>}}
+        when INL_A
+          str.sub!(INL_A) {%Q{<a href='#{$1}'#{append}>#{$2}</a>}}
+        else
+          break
+        end
+      end
       str
     end
   end
