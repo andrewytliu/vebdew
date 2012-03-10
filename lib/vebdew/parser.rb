@@ -8,6 +8,7 @@ module Vebdew
       @body = []
       @footer = []
       @buffer = []
+      @attrs = ""
       @flag = Hash.new { |h, k| h[k] = false }
 
       parse
@@ -40,6 +41,8 @@ module Vebdew
           close_buffer
           close_flag :slide
           close_flag :stack
+        when /\{:([^\}]+)\}/
+          selector $1
         when /^~+/
           if @flag[:code]
             @body << @buffer.join
@@ -51,24 +54,24 @@ module Vebdew
           end
         when /^(#+) (.*)/
           level = $1.size
-          @body << "<h#{level}>#{$2}</h#{level}>"
+          @body << "<h#{level}#{append}>#{$2}</h#{level}>"
         when /^-+/
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
-            @body << "<h2>#{tagged.strip}</h2>"
+            @body << "<h2#{append}>#{tagged.strip}</h2>"
           else
-            @body << "<hr>"
+            @body << "<hr#{append}>"
           end
         when /^=+/
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
-            @body << "<h1>#{tagged.strip}</h1>"
+            @body << "<h1#{append}>#{tagged.strip}</h1>"
           end
         when /^\* (.+)/
           start_flag :ul unless @flag[:ul]
-          @body << "<li>#{format_content($1)}</li>"
+          @body << "<li#{append}>#{format_content($1)}</li>"
         else
           @buffer << raw_line
         end
@@ -114,7 +117,9 @@ module Vebdew
                   :ul => "<ul>" }
 
     def start_flag flag
-      @body << START_STR[flag]
+      str = START_STR[flag]
+      str[-1] = "#{append}>" unless @attrs.empty?
+      @body << str
       @flag[flag] = true
     end
 
@@ -128,9 +133,28 @@ module Vebdew
       @flag[flag] = false
     end
 
+    def selector str
+      klass = str.scan(/\.([^\.\[#]+)/).flatten
+      id = str.scan(/#([^\.\[#])+/).flatten
+      attrs = str.scan(/\[([^\.\]=#]+)=([^\.\]]+)\]/)
+
+      @attrs = ""
+      @attrs += " class='#{klass.join(' ')}'" unless klass.empty?
+      @attrs += " id='#{id.join(' ')}'" unless id.empty?
+      attrs.each do |a|
+        @attrs += " #{a[0]}='#{a[1]}'"
+      end
+    end
+
+    def append
+      str = @attrs
+      @attrs = ""
+      str
+    end
+
     def format_buffer
       @buffer.map! do |buf|
-        "<p>#{format_content(buf)}</p>"
+        "<p#{append}>#{format_content(buf)}</p>"
       end
     end
 
