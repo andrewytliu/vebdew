@@ -5,33 +5,36 @@
 
 Gem::Specification.new do |s|
   s.name = "vebdew"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Liu"]
-  s.date = "2012-03-08"
+  s.date = "2012-03-10"
   s.description = "Generate HTML5 slides"
   s.email = "andrewliu33@gmail.com"
   s.executables = ["vebdew"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "bin/vebdew",
+    "lib/template/vew/sample.vew",
+    "lib/template/vew/template.erb",
     "lib/vebdew.rb",
     "lib/vebdew/formatter.rb",
     "lib/vebdew/parser.rb",
     "lib/vebdew/runner.rb",
     "test/helper.rb",
-    "test/test_vebdew.rb"
+    "test/test_vebdew.rb",
+    "vebdew.gemspec"
   ]
   s.homepage = "http://github.com/eggegg/vebdew"
   s.licenses = ["MIT"]
