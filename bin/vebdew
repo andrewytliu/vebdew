@@ -2,15 +2,28 @@
 
 require 'vebdew'
 
-usage = "
-Usage: vebdew COMMAND
+usage =
+"Usage: vebdew COMMAND
+
+Directory:
+  - /vew           \# Vew file
+    - template.erb
+  - /css           \# CSS styles
+  - /js            \# Javascript files
+  - *.html         \# Compiled html slides
 
 Commands:
-  compile \# Compiles single file into HTML5 slides (shortcut: c)
-          \# [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
+  new      \# Create a new slide project
+  generate \# Generate slides for current directory  (shortcut: g)
+  compile  \# Compiles single file into HTML5 slides (shortcut: c)
+           \# [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
 "
 
 case ARGV[0]
+when /new/
+  Vebdew::Runner.create
+when /generate|g/
+  Vebdew::Runner.generate
 when /compile|c/
   vew, erb, html = ARGV[1], ARGV[2], ARGV[3]
 
@@ -19,7 +32,7 @@ when /compile|c/
   elsif !File.exist?(erb)
     puts "Erb template doesn't exist!"
   else
-    Vebdew::Runner.generate vew, erb, html
+    Vebdew::Runner.compile vew, erb, html
   end
 else
   puts usage
