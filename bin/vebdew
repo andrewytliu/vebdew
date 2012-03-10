@@ -2,8 +2,25 @@
 
 require 'vebdew'
 
-unless ARGV.size == 3
-  puts "[USAGE] vebdew [VEW FILE] [ERB FILE] [HTML FILE]"
+usage = "
+Usage: vebdew COMMAND
+
+Commands:
+  compile \# Compiles single file into HTML5 slides (shortcut: c)
+          \# [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
+"
+
+case ARGV[0]
+when /compile|c/
+  vew, erb, html = ARGV[1], ARGV[2], ARGV[3]
+
+  if !File.exist?(vew)
+    puts "Vew file doesn't exist!"
+  elsif !File.exist?(erb)
+    puts "Erb template doesn't exist!"
+  else
+    Vebdew::Runner.generate vew, erb, html
+  end
 else
-  Vebdew::Runner.generate ARGV[0], ARGV[1], ARGV[2]
+  puts usage
 end
