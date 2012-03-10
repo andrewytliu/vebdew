@@ -50,9 +50,9 @@ Current slide is closed and a new slide is created when a `!SLIDE` token is enco
 Marks the starting and ending of a stack (vertical slide stack). Rules are the same as `!SLIDE` and `!ENDSLIDE`.
 
 ### Code spans & code blocks
-Code spans are wrapped by `\`\``. This emits a `<code>` block. Brackets (<, >) are escaped to &lt; and &gt; automatically. To output a `\`` charactor, escape it like `\\\``.
+Code spans are wrapped by backticks. This emits a `<code>` block. Brackets (<, >) are escaped to &lt; and &gt; automatically. Escaptions are available in code spans.
 
-Two types of code blocks are supported here. The code blocks wrapped in three or more `\``s. This kind of code blocks emits `<code>...</code>`. The second kind is wrapped in three or more `~`s. This kind of code blocks emits `<script type="text/x-sample">...</script>`, which makes uses of sample.js.
+Two types of code blocks are supported here. The code blocks wrapped in three or more backticks. This kind of code blocks emits `<code>...</code>`. The second kind is wrapped in three or more `~`s. This kind of code blocks emits `<script type="text/x-sample">...</script>`, which makes uses of sample.js.
 
 
 ### HTML elements
@@ -82,24 +82,33 @@ Lines with leading and trailing blank lines, if not matched by any of the rules 
 
 ### Attributes
 CSS-Selector like decorators can be appended to any of the elements above. The syntax is like:
+
 ```
 {:#ID.class[attr=value]}
 ```
+
 Such examples are:
+
 ```
 {:.inverted}
 Introducing HTML
 ================
 ```
+
 generating
+
 ```
 <h1 class="inverted">Introducing HTML</h1>
 ```
+
 Another example is:
+
 ```
 `<input>` tag has an attribute called `type`{:.attr[title="checkbox|radio|submit"]}
 ```
+
 emits
+
 ```
 <code>&lt;input&gt;</code> tag has an attribute called <code class="attr" title="checkbox|radio|submit">type</code>
 ```
