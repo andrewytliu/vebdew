@@ -1,12 +1,20 @@
 # vebdew
 
-A simple HTML5 slide generate.
+A simple HTML5 slide generator.
+Converts vew files into HTML5 slides.
 
 ## Library used
 - reveal.js
 - erubis
 
+## Install
+```
+gem install vebdew
+```
+
 ## Usage
+
+Run `new` to create a new project, `generate` to convert all vew files in the project to HTML.  If you want to manually convert vew files, run `compile`.
 
 ```
 Usage: vebdew COMMAND
