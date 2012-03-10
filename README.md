@@ -112,7 +112,7 @@ generating
 Another example is:
 
 ```
-`<input>` tag has an attribute called `type`{:.attr[title="checkbox|radio|submit"]}
+`<input>` tag has an attribute called {:.attr[title=checkbox|radio|submit]}`type`
 ```
 
 emits
