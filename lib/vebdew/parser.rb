@@ -16,14 +16,14 @@ module Vebdew
 
   protected
     CMD        = /^:(\w+) (.*)$/
-    SLIDE      = /^\!SLIDE/
-    ENDSLIDE   = /^\!ENDSLIDE/
-    STACK      = /^\!STACK/
-    ENDSTACK   = /^\!ENDSTACK/
+    SLIDE      = /^\!SLIDE$/
+    ENDSLIDE   = /^\!ENDSLIDE$/
+    STACK      = /^\!STACK$/
+    ENDSTACK   = /^\!ENDSTACK$/
     SELECTOR   = /\{:([^\}]+)\}$/
-    CURLY_BAR  = /^~+/
-    SINGLE_BAR = /^-+/
-    DOUBLE_BAR = /^=+/
+    CURLY_BAR  = /^~+$/
+    SINGLE_BAR = /^-+$/
+    DOUBLE_BAR = /^=+$/
     SHARP      = /^(#+) (.*)/
     UL         = /^\* (.+)/
 
