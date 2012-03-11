@@ -20,17 +20,17 @@ Run `new` to create a new project, `generate` to convert all vew files in the pr
 Usage: vebdew COMMAND
 
 Directory:
-  - /vew           \# Vew file
+  - /vew           # Vew file
     - template.erb
-  - /css           \# CSS styles
-  - /js            \# Javascript files
-  - *.html         \# Compiled html slides
+  - /css           # CSS styles
+  - /js            # Javascript files
+  - *.html         # Compiled html slides
 
 Commands:
-  new      \# Create a new slide project
-  generate \# Generate slides for current directory  (shortcut: g)
-  compile  \# Compiles single file into HTML5 slides (shortcut: c)
-           \# [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
+  new      # Create a new slide project
+  generate # Generate slides for current directory  (shortcut: g)
+  compile  # Compiles single file into HTML5 slides (shortcut: c)
+           # [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
 ```
 
 ## Vew file syntax
