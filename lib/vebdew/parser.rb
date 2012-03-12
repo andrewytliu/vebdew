@@ -79,8 +79,12 @@ module Vebdew
             start_flag :code
           end
         when SHARP
-          level = $1.size
-          @body << "<h#{level}#{append}>#{$2}</h#{level}>"
+          if !@flag[:sample] && !@flag[:code] # not comments in code & sample
+            level = $1.size
+            @body << "<h#{level}#{append}>#{$2}</h#{level}>"
+          else
+            @buffer << raw_line
+          end
         when SINGLE_BAR
           tagged = @buffer.pop
           close_buffer
