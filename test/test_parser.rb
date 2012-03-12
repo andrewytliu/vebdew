@@ -39,6 +39,10 @@ describe 'Parser' do
               ['<h2 class="test" id="id" data="you">abc</h2>']],
              [["{:.demo}", "lala"],
               ['<p class="demo">lala</p>']],
+             [["{:.class#id","!SLIDE", "a\n", "!ENDSLIDE\n"],
+              ["<section class=\"class\" id=\"id\">","<p>a</p>","</section>"]],
+             [["!SLIDE.class#id\n", "a\n", "!ENDSLIDE\n"],
+              ["<section class=\"class\" id=\"id\">","<p>a</p>","</section>"]],
 
              # checks whether buffer clears
              [[
