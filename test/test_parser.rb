@@ -37,6 +37,8 @@ describe 'Parser' do
               ['<h1 class="test" id="id" data="you">abc</h1>']],
              [["{:#id.test[data=you]}", "abc", "---"],
               ['<h2 class="test" id="id" data="you">abc</h2>']],
+             [["{:.demo}", "lala"],
+              ['<p class="demo">lala</p>']],
 
              # checks whether buffer clears
              [[

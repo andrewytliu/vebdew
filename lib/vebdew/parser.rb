@@ -130,7 +130,7 @@ module Vebdew
                   :ul => "<ul>" }
 
     def start_flag flag
-      str = START_STR[flag]
+      str = START_STR[flag].dup
       str[-1] = "#{append}>" unless @attrs.empty?
       @body << str
       @flag[flag] = true
