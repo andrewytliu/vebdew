@@ -126,7 +126,7 @@ module Vebdew
 
     START_STR = { :slide => "<section>",
                   :stack => "<section>",
-                  :code => "<script type='text/x-sample'>",
+                  :code => "<script type=\"text/x-sample\">",
                   :ul => "<ul>" }
 
     def start_flag flag
@@ -156,10 +156,10 @@ module Vebdew
       attrs = str.scan(SEL_ATTR)
 
       @attrs = ""
-      @attrs += " class='#{klass.join(' ')}'" unless klass.empty?
-      @attrs += " id='#{id.join(' ')}'" unless id.empty?
+      @attrs += " class=\"#{klass.join(' ')}\"" unless klass.empty?
+      @attrs += " id=\"#{id.join(' ')}\"" unless id.empty?
       attrs.each do |a|
-        @attrs += " #{a[0]}='#{a[1]}'"
+        @attrs += " #{a[0]}=\"#{a[1]}\""
       end
     end
 
@@ -178,7 +178,8 @@ module Vebdew
 
     def format_buffer
       @buffer.map! do |buf|
-        "<p#{append}>#{format_content(buf)}</p>"
+        content = format_content(buf)
+        "<p#{append}>#{content}</p>" unless content.length == 0
       end
     end
 
@@ -198,11 +199,11 @@ module Vebdew
         when INL_CODE
           str.sub!(INL_CODE) {%Q{<code#{append}>#{escape_html($1)}</code>}}
         when INL_IMG_ALT
-          str.sub!(INL_IMG_ALT) {%Q{<img src='#{$1}' alt='#{$2}'#{append}>}}
+          str.sub!(INL_IMG_ALT) {%Q{<img src="#{$1}" alt="#{$2}"#{append}>}}
         when INL_IMG
-          str.sub!(INL_IMG) {%Q{<img src='#{$1}'#{append}>}}
+          str.sub!(INL_IMG) {%Q{<img src="#{$1}"#{append}>}}
         when INL_A
-          str.sub!(INL_A) {%Q{<a href='#{$1}'#{append}>#{$2}</a>}}
+          str.sub!(INL_A) {%Q{<a href="#{$1}"#{append}>#{$2}</a>}}
         else
           break
         end
