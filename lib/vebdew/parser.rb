@@ -126,7 +126,7 @@ module Vebdew
 
     START_STR = { :slide => "<section>",
                   :stack => "<section>",
-                  :code => "<script type=\"text/x-sample\">",
+                  :code => '<script type="text/x-sample">',
                   :ul => "<ul>" }
 
     def start_flag flag
@@ -156,10 +156,10 @@ module Vebdew
       attrs = str.scan(SEL_ATTR)
 
       @attrs = ""
-      @attrs += " class=\"#{klass.join(' ')}\"" unless klass.empty?
-      @attrs += " id=\"#{id.join(' ')}\"" unless id.empty?
+      @attrs += %Q{ class="#{klass.join(' ')}"} unless klass.empty?
+      @attrs += %Q{ id="#{id.join(' ')}"} unless id.empty?
       attrs.each do |a|
-        @attrs += " #{a[0]}=\"#{a[1]}\""
+        @attrs += %Q{ #{a[0]}="#{a[1]}"}
       end
     end
 
@@ -178,8 +178,7 @@ module Vebdew
 
     def format_buffer
       @buffer.map! do |buf|
-        content = format_content(buf)
-        "<p#{append}>#{content}</p>" unless content.length == 0
+        "<p#{append}>#{format_content(buf)}</p>" unless buf.empty?
       end
     end
 
