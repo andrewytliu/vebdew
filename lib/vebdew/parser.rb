@@ -20,12 +20,12 @@ module Vebdew
     ENDSLIDE   = /^\!ENDSLIDE$/
     STACK      = /^\!STACK$/
     ENDSTACK   = /^\!ENDSTACK$/
-    SELECTOR   = /\{:([^\}]+)\}$/
+    SELECTOR   = /^\{:([^\}]+)\}$/
     CURLY_BAR  = /^~+$/
     SINGLE_BAR = /^-+$/
     DOUBLE_BAR = /^=+$/
-    SHARP      = /^(#+) (.*)/
-    UL         = /^\* (.+)/
+    SHARP      = /^(#+) (.+)$/
+    UL         = /^\* (.+)$/
 
     def parse
       for raw_line in @lines
