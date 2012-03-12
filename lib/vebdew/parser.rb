@@ -1,4 +1,5 @@
 module Vebdew
+  require 'htmlentities'
   class Parser
     attr_reader :header, :body, :footer
 
@@ -169,11 +170,8 @@ module Vebdew
       str
     end
 
-    HTML_GT = />/
-    HTML_LT = /</
-
     def escape_html str
-      str.gsub(HTML_GT, "&gt;").gsub(HTML_LT, "&lt;")
+      HTMLEntities.new.encode str
     end
 
     def format_buffer

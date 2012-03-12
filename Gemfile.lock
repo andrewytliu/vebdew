@@ -4,6 +4,7 @@ GEM
     bacon (1.1.0)
     erubis (2.7.0)
     git (1.2.5)
+    htmlentities (4.3.1)
     jeweler (1.8.3)
       bundler (~> 1.0)
       git (>= 1.2.5)
@@ -21,5 +22,6 @@ DEPENDENCIES
   bacon (~> 1.1.0)
   bundler (~> 1.0.0)
   erubis
+  htmlentities
   jeweler (~> 1.8.3)
   rdoc (~> 3.12)

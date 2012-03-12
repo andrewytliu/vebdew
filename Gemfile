@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 gem "erubis"
+gem "htmlentities"
 
 group :development do
   gem "bacon", "~> 1.1.0"
