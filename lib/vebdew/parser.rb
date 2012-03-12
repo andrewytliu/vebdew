@@ -22,9 +22,10 @@ module Vebdew
     STACK      = /^\!STACK$/
     ENDSTACK   = /^\!ENDSTACK$/
     SELECTOR   = /^\{:([^\}]+)\}$/
-    CURLY_BAR  = /^~+$/
-    SINGLE_BAR = /^-+$/
-    DOUBLE_BAR = /^=+$/
+    CURLY_BAR  = /^~{2,}$/
+    GRAVE_BAR  = /^`{2,}$/
+    SINGLE_BAR = /^-{2,}$/
+    DOUBLE_BAR = /^={2,}$/
     SHARP      = /^(#+) (.+)$/
     UL         = /^\* (.+)$/
 
@@ -57,8 +58,20 @@ module Vebdew
         when SELECTOR
           selector $1
         when CURLY_BAR
-          if @flag[:code]
+          if @flag[:sample]
             @body << @buffer.join
+            @buffer.clear
+            close_flag :sample
+          else
+            close_buffer
+            start_flag :sample
+          end
+        when GRAVE_BAR
+          if @flag[:code]
+            # getting the least indent
+            indent = @buffer.map{ |line| line.index(/[^ ]/) || 999}.min
+            # remove the indent
+            @body << @buffer.map{ |line| line.gsub(/^ {#{indent}}/, '')}.join("\n")
             @buffer.clear
             close_flag :code
           else
@@ -127,7 +140,8 @@ module Vebdew
 
     START_STR = { :slide => "<section>",
                   :stack => "<section>",
-                  :code => '<script type="text/x-sample">',
+                  :sample => '<script type="text/x-sample">',
+                  :code => '<pre><code>',
                   :ul => "<ul>" }
 
     def start_flag flag
@@ -139,7 +153,8 @@ module Vebdew
 
     CLOSE_STR = { :slide => "</section>",
                   :stack => "</section>",
-                  :code => "</script>",
+                  :sample => "</script>",
+                  :code => '</code></pre>',
                   :ul => "</ul>" }
 
     def close_flag flag

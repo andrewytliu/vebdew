@@ -8,6 +8,8 @@ describe 'Parser' do
               ["<section>", "<section>", "</section>", "</section>"]],
              [["~~~", "qqq", "~~~"],
               ["<script type=\"text/x-sample\">", "qqq", "</script>"]],
+             [["```", "  if(a)", "# unindented comment", "    b", "  end", "```"],
+              ["<pre><code>", "if(a)", "# unindented comment", "  b", "end", "</code></pre>"]],
              [["---"],
               ["<hr>"]],
              [["abc", "---"],
@@ -18,8 +20,6 @@ describe 'Parser' do
               ["<h3>qqq</h3>"]],
              [["* qqq", "* www"],
               ["<ul>", "<li>qqq</li>", "<li>www</li>", "</ul>"]],
-             [["{:.pre}`aloha`"],
-              ['<p><code class="pre">aloha</code></p>']],
              [["![a.jpg](haha)"],
               ['<p><img src="a.jpg" alt="haha"></p>']],
              [["![b.jpg]"],
@@ -28,6 +28,8 @@ describe 'Parser' do
               ['<p><a href="google.com">you</a></p>']],
 
              # attributes
+             [["{:.pre}`aloha`"],
+              ['<p><code class="pre">aloha</code></p>']],
              [["{:#def.abc[data=you]}", "papa"],
               ['<p class="abc" id="def" data="you">papa</p>']],
              [["{:#id.test[data=you]}", "~~~", "lalala", "~~~"],
