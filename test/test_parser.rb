@@ -6,10 +6,10 @@ describe 'Parser' do
               ["<section>","<p>a</p>","</section>"]],
              [["!STACK\n", "!SLIDE\n", "!ENDSTACK\n"],
               ["<section>", "<section>", "</section>", "</section>"]],
-             [["~~~", "qqq", "~~~"],
-              ["<script type=\"text/x-sample\">", "qqq", "</script>"]],
-             [["```\n", "  if(a)\n", "# unindented comment\n", "    b\n", "  end\n", "```\n"],
-              ["<pre><code>", "if(a)\n# unindented comment\n  b\nend\n", "</code></pre>"]],
+             [["~~~", "  <tag>AS-IS</tag>", "~~~"],
+              ["<script type=\"text/x-sample\">", "  <tag>AS-IS</tag>", "</script>"]],
+             [["```\n", "  if(a)\n", "# unindented comment\n", "    b\n", "    <tag>\n", "  end\n", "```\n"],
+              ["<pre><code><!--", "-->if(a)\n# unindented comment\n  b\n  &lt;tag&gt;\nend\n<!--", "--></code></pre>"]],
              [["---"],
               ["<hr>"]],
              [["abc", "---"],
@@ -50,7 +50,7 @@ describe 'Parser' do
              [["abc", "{:.la}", "oop"],
               ["<p>abc</p>", '<p class="la">oop</p>']],
              [["```", '# cmt', "```"],
-              ["<pre><code>", '# cmt', "</code></pre>"]],
+              ["<pre><code><!--", '--># cmt<!--', "--></code></pre>"]],
 
              # checks whether buffer clears
              [[

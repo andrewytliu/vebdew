@@ -91,12 +91,12 @@ module Vebdew
           end
         when SHARP
           level = $1.size
-          @body << "<h#{level}#{append}>#{$2}</h#{level}>"
+          @body << "<h#{level}#{append}>#{format_content $2}</h#{level}>"
         when SINGLE_BAR
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
-            @body << "<h2#{append}>#{tagged.strip}</h2>"
+            @body << "<h2#{append}>#{format_content tagged.strip}</h2>"
           else
             @body << "<hr#{append}>"
           end
@@ -104,7 +104,7 @@ module Vebdew
           tagged = @buffer.pop
           close_buffer
           if tagged and !tagged.empty?
-            @body << "<h1#{append}>#{tagged.strip}</h1>"
+            @body << "<h1#{append}>#{format_content tagged.strip}</h1>"
           end
         when UL
           start_flag :ul unless @flag[:ul]
@@ -149,15 +149,15 @@ module Vebdew
       @buffer.clear
     end
 
-    START_STR = { :slide => "<section>",
-                  :stack => "<section>",
-                  :sample => '<script type="text/x-sample">',
-                  :code => '<pre><code>',
-                  :ul => "<ul>" }
+    START_STR = { :slide => "<section$>",
+                  :stack => "<section$>",
+                  :sample => '<script type="text/x-sample"$>',
+                  :code => '<pre$><code><!--',
+                  :ul => "<ul$>" }
 
     def start_flag flag
       str = START_STR[flag].dup
-      str[-1] = "#{append}>" unless @attrs.empty?
+      str['$'] = append
       @body << str
       @flag[flag] = true
     end
@@ -165,7 +165,7 @@ module Vebdew
     CLOSE_STR = { :slide => "</section>",
                   :stack => "</section>",
                   :sample => "</script>",
-                  :code => '</code></pre>',
+                  :code => '--></code></pre>',
                   :ul => "</ul>" }
 
     def close_flag flag
@@ -204,7 +204,9 @@ module Vebdew
 
     def format_indent
       indent = @buffer.map{ |l| l =~ /[^\s]/ }.reject{ |l| l == 0 }.min
-      @buffer.map! { |l| l.gsub(/^\s{#{indent}}/, '') }
+      @buffer.map! { |l| escape_html(l.gsub(/^\s{#{indent}}/, '')) }
+      @buffer[0] = "-->" + @buffer[0]
+      @buffer[-1] += "<!--"
     end
 
     def format_buffer
