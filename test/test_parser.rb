@@ -8,8 +8,8 @@ describe 'Parser' do
               ["<section>", "<section>", "</section>", "</section>"]],
              [["~~~", "qqq", "~~~"],
               ["<script type=\"text/x-sample\">", "qqq", "</script>"]],
-             [["```", "  if(a)", "# unindented comment", "    b", "  end", "```"],
-              ["<pre><code>", "if(a)", "# unindented comment", "  b", "end", "</code></pre>"]],
+             [["```\n", "  if(a)\n", "# unindented comment\n", "    b\n", "  end\n", "```\n"],
+              ["<pre><code>", "if(a)\n# unindented comment\n  b\nend\n", "</code></pre>"]],
              [["---"],
               ["<hr>"]],
              [["abc", "---"],
@@ -43,8 +43,10 @@ describe 'Parser' do
               ['<p class="demo">lala</p>']],
              [["{:.class#id}","!SLIDE", "a\n", "!ENDSLIDE\n"],
               ["<section class=\"class\" id=\"id\">","<p>a</p>","</section>"]],
-             [["!SLIDE.class#id\n", "a\n", "!ENDSLIDE\n"],
-              ["<section class=\"class\" id=\"id\">","<p>a</p>","</section>"]],
+             [["", "{:.def}", "abc"],
+              [nil, '<p class="def">abc</p>']],
+             [["", "{:.sld}", "!SLIDE"],
+              [nil, '<section class="sld">', '</section>']],
 
              # checks whether buffer clears
              [[
