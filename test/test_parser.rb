@@ -47,6 +47,8 @@ describe 'Parser' do
               [nil, '<p class="def">abc</p>']],
              [["", "{:.sld}", "!SLIDE"],
               [nil, '<section class="sld">', '</section>']],
+             [["abc", "{:.la}", "oop"],
+              ["<p>abc</p>", '<p class="la">oop</p>']],
 
              # checks whether buffer clears
              [[

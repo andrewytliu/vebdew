@@ -56,6 +56,7 @@ module Vebdew
           close_flag :slide
           close_flag :stack
         when SELECTOR
+          close_buffer
           selector $1
         when CURLY_BAR
           if @flag[:sample]
