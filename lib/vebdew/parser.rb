@@ -1,5 +1,6 @@
+require 'htmlentities'
+
 module Vebdew
-  require 'htmlentities'
   class Parser
     attr_reader :header, :body, :footer
 
