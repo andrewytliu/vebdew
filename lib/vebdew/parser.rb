@@ -36,6 +36,17 @@ module Vebdew
         # special case for no enders
         close_flag :ul if @flag[:ul] and !line.match(UL)
 
+        # special case for blocks
+        block_flag = false
+        [[:sample, CURLY_BAR], [:code, GRAVE_BAR]].each do |rule, mth|
+          if @flag[rule] and !line.match(mth)
+            @buffer << raw_line
+            block_flag = true
+            break
+          end
+        end
+        next if block_flag
+
         case line
         when CMD
           command $1, $2
@@ -78,12 +89,8 @@ module Vebdew
             start_flag :code
           end
         when SHARP
-          if !@flag[:sample] && !@flag[:code] # not comments in code & sample
-            level = $1.size
-            @body << "<h#{level}#{append}>#{$2}</h#{level}>"
-          else
-            @buffer << raw_line
-          end
+          level = $1.size
+          @body << "<h#{level}#{append}>#{$2}</h#{level}>"
         when SINGLE_BAR
           tagged = @buffer.pop
           close_buffer

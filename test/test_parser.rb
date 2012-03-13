@@ -49,6 +49,8 @@ describe 'Parser' do
               [nil, '<section class="sld">', '</section>']],
              [["abc", "{:.la}", "oop"],
               ["<p>abc</p>", '<p class="la">oop</p>']],
+             [["```", '# cmt', "```"],
+              ["<pre><code>", '# cmt', "</code></pre>"]],
 
              # checks whether buffer clears
              [[
