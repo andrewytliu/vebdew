@@ -69,10 +69,8 @@ module Vebdew
           end
         when GRAVE_BAR
           if @flag[:code]
-            # getting the least indent
-            indent = @buffer.map{|l| l.index(/[^ ]/)}.reject{|l| l == 0}.min
-            # remove the indent
-            @body << @buffer.map { |l| l.gsub(/^ {#{indent}}/, '')}.join
+            format_indent
+            @body << @buffer.join
             @buffer.clear
             close_flag :code
           else
@@ -194,6 +192,11 @@ module Vebdew
 
     def escape_html str
       ESCAPER.encode str
+    end
+
+    def format_indent
+      indent = @buffer.map{ |l| l =~ /[^\s]/ }.reject{ |l| l == 0 }.min
+      @buffer.map! { |l| l.gsub(/^\s{#{indent}}/, '') }
     end
 
     def format_buffer
