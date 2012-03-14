@@ -95,7 +95,7 @@ module Vebdew
         when SINGLE_BAR
           tagged = @buffer.pop
           close_buffer
-          if tagged and !tagged.empty?
+          if tagged and !tagged.strip.empty?
             @body << "<h2#{append}>#{format_content tagged.strip}</h2>"
           else
             @body << "<hr#{append}>"

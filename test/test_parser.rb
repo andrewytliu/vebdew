@@ -12,6 +12,8 @@ describe 'Parser' do
               ["<pre><code><!--", "-->if(a)\n# unindented comment\n  b\n  &lt;tag&gt;\nend\n<!--", "--></code></pre>"]],
              [["---"],
               ["<hr>"]],
+             [["           \n",  "---"],
+              ["<hr>"]],
              [["abc", "---"],
               ["<h2>abc</h2>"]],
              [["abc", "==="],
