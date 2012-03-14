@@ -1,11 +1,12 @@
 # vebdew
 
 A simple HTML5 slide generator.
-Converts vew files into HTML5 slides.
+Converts vew files (markdown like syntax) into HTML5 slides.
 
 ## Library used
-- reveal.js
-- erubis
+- reveal.js: for the slides animation
+- erubis: for the template
+- htmlentities: for escaping the HTML
 
 ## Install
 ```
@@ -20,8 +21,12 @@ Run `new` to create a new project, `generate` to convert all vew files in the pr
 Usage: vebdew COMMAND
 
 Directory:
-  - /vew           # Vew file
-    - template.erb
+  - /vew           # Vew file, all the *.vew files will be compiled to html
+                   # when running the `generate` command
+    - template.erb # ERB template for the HTML
+                   # @header meta tags and stylesheets
+                   # @body   for the contents
+                   # @footer for the javascripts
   - /css           # CSS styles
   - /js            # Javascript files
   - *.html         # Compiled html slides
