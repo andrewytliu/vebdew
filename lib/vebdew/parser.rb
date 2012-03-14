@@ -203,8 +203,8 @@ module Vebdew
     end
 
     def format_indent
-      indent = @buffer.map{ |l| l =~ /[^\s]/ }.reject{ |l| l == 0 }.min
-      @buffer.map! { |l| escape_html(l.gsub(/^\s{#{indent}}/, '')) }
+      indent = @buffer.map{ |l| l =~ /[^\s]/ }.reject{ |l| !l or l == 0 }.min
+      @buffer.map! { |l| escape_html(l.gsub(/^\s{#{indent}}/, '')) } if indent
       @buffer[0] = "-->" + @buffer[0]
       @buffer[-1] += "<!--"
     end
