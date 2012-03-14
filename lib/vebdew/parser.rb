@@ -107,6 +107,7 @@ module Vebdew
             @body << "<h1#{append}>#{format_content tagged.strip}</h1>"
           end
         when UL
+          close_buffer
           start_flag :ul unless @flag[:ul]
           @body << "<li#{append}>#{format_content($1)}</li>"
         else
@@ -235,6 +236,7 @@ module Vebdew
         when INL_IMG
           str.sub!(INL_IMG) {%Q{<img src="#{$1}"#{append}>}}
         when INL_A
+          @attrs += ' target="_blank"' if $1.match %r{https?://}
           str.sub!(INL_A) {%Q{<a href="#{$1}"#{append}>#{$2}</a>}}
         else
           break

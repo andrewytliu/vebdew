@@ -26,6 +26,8 @@ describe 'Parser' do
               ['<p><img src="b.jpg"></p>']],
              [["[google.com](you)"],
               ['<p><a href="google.com">you</a></p>']],
+             [["[http://google.com](you)"],
+              ['<p><a href="http://google.com" target="_blank">you</a></p>']],
 
              # attributes
              [["{:.pre}`aloha`"],
@@ -75,8 +77,12 @@ describe 'Parser' do
                 '  should_not_have_demo_class',
                 '</script>',
                 '</section>'
-              ]]
+              ]],
+              # breaking
+              [["{:.klass}![img](alt)\n\n", "* a\n"],
+               ['<p><img src="img" alt="alt" class="klass"></p>', "<ul>","<li>a</li>", "</ul>"]]
             ]
+
 
   for q, a in Q_AND_A
     it "should parse #{q}" do
