@@ -221,7 +221,7 @@ module Vebdew
     INL_CODE     = /`(([^\\`]|\\.)*)`/
     INL_IMG_ALT  = /\!\[([^\]]+)\]\(([^\)]+)\)/
     INL_IMG      = /\!\[([^\]]+)\]/
-    INL_A        = /\[([^\]]+)\]\(([^\)]+)\)/
+    INL_A        = /\[([^\]]+)\]\((([^\)\\]|\\.)+)\)/
 
     def format_content str
       str.strip!
@@ -238,7 +238,7 @@ module Vebdew
           str.sub!(INL_IMG) {%Q{<img src="#{$1}"#{append}>}}
         when INL_A
           @attrs += ' target="_blank"' if $1.match %r{https?://}
-          str.sub!(INL_A) {%Q{<a href="#{$1}"#{append}>#{$2}</a>}}
+          str.sub!(INL_A) {%Q{<a href="#{$1}"#{append}>#{$2.gsub(/\\(.)/, '\1')}</a>}}
         else
           break
         end

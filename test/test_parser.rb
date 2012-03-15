@@ -30,6 +30,8 @@ describe 'Parser' do
               ['<p><img src="b.jpg"></p>']],
              [["[google.com](you)"],
               ['<p><a href="google.com">you</a></p>']],
+             [['[google.com](you\(\))'],
+              ['<p><a href="google.com">you()</a></p>']],
              [["[http://google.com](you)"],
               ['<p><a href="http://google.com" target="_blank">you</a></p>']],
 
@@ -84,7 +86,7 @@ describe 'Parser' do
               ]],
               # breaking
               [["{:.klass}![img](alt)\n\n", "* a\n"],
-               ['<p><img src="img" alt="alt" class="klass"></p>', "<ul>","<li>a</li>", "</ul>"]]
+               ['<p><img src="img" alt="alt" class="klass"></p>', "<ul>","<li>a</li>", "</ul>"]],
             ]
 
 
