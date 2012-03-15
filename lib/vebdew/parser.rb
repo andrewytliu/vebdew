@@ -219,9 +219,9 @@ module Vebdew
 
     INL_SELECTOR = /\{:([^\}]+)\}/
     INL_CODE     = /`(([^\\`]|\\.)*)`/
-    INL_IMG_ALT  = /\!\[([^\]]+)\]\(([^\)]+)\)/
-    INL_IMG      = /\!\[([^\]]+)\]/
-    INL_A        = /\[([^\]]+)\]\((([^\)\\]|\\.)+)\)/
+    INL_IMG_ALT  = /\!\[(([^\]\\]|\\.)+)\]\((([^\)\\]|\\.)+)\)/
+    INL_IMG      = /\!\[(([^\]\\]|\\.)+)\]/
+    INL_A        = /\[(([^\]\\]|\\.)+)\]\((([^\)\\]|\\.)+)\)/
 
     def format_content str
       str.strip!
@@ -233,17 +233,21 @@ module Vebdew
         when INL_CODE
           str.sub!(INL_CODE) {%Q{<code#{append}>#{escape_html($1)}</code>}}
         when INL_IMG_ALT
-          str.sub!(INL_IMG_ALT) {%Q{<img src="#{$1}" alt="#{$2}"#{append}>}}
+          str.sub!(INL_IMG_ALT) {%Q{<img src="#{clear_esc $1}" alt="#{clear_esc $3}"#{append}>}}
         when INL_IMG
-          str.sub!(INL_IMG) {%Q{<img src="#{$1}"#{append}>}}
+          str.sub!(INL_IMG) {%Q{<img src="#{clear_esc $1}"#{append}>}}
         when INL_A
           @attrs += ' target="_blank"' if $1.match %r{https?://}
-          str.sub!(INL_A) {%Q{<a href="#{$1}"#{append}>#{$2.gsub(/\\(.)/, '\1')}</a>}}
+          str.sub!(INL_A) {%Q{<a href="#{clear_esc $1}"#{append}>#{clear_esc $3}</a>}}
         else
           break
         end
       end
       str
+    end
+
+    def clear_esc str
+      str.gsub(/\\(.)/, '\1')
     end
   end
 end
