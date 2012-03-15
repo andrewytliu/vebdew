@@ -90,6 +90,7 @@ module Vebdew
             start_flag :code
           end
         when SHARP
+          close_buffer
           level = $1.size
           @body << "<h#{level}#{append}>#{format_content $2}</h#{level}>"
         when SINGLE_BAR

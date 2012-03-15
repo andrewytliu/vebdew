@@ -20,6 +20,8 @@ describe 'Parser' do
               ["<h1>abc</h1>"]],
              [["### qqq"],
               ["<h3>qqq</h3>"]],
+             [["Yooo\n", "### qqq\n", "Tooo"],
+              ["<p>Yooo</p>", "<h3>qqq</h3>", "<p>Tooo</p>"]],
              [["* qqq", "* www"],
               ["<ul>", "<li>qqq</li>", "<li>www</li>", "</ul>"]],
              [["![a.jpg](haha)"],
