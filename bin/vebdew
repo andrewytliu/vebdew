@@ -14,6 +14,7 @@ Directory:
 
 Commands:
   new      \# Create a new slide project
+           \# [PROJECT NAME]
   generate \# Generate slides for current directory  (shortcut: g)
   compile  \# Compiles single file into HTML5 slides (shortcut: c)
            \# [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
@@ -21,7 +22,7 @@ Commands:
 
 case ARGV[0]
 when /new/
-  Vebdew::Runner.create
+  Vebdew::Runner.create ARGV[1]
 when /generate|g/
   Vebdew::Runner.generate
 when /compile|c/

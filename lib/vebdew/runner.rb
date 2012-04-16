@@ -4,12 +4,17 @@ module Vebdew
   module Runner
     module_function
 
-    def create
-      dir = File.join File.dirname(__FILE__), "../template/*"
-      Dir[File.expand_path dir].each do |file|
-        FileUtils.cp_r file, Dir.pwd
+    def create project
+      if File.exist?(project)
+        puts "The project already exists! Abort ..."
+      else
+        dir = File.join File.dirname(__FILE__), "../template/*"
+        dst = FileUtils.mkdir project
+        Dir[File.expand_path dir].each do |file|
+          FileUtils.cp_r file, File.join(Dir.pwd, project)
+        end
+        puts "Vebdew project generated!"
       end
-      puts "Vebdew project generated!"
     end
 
     def generate
