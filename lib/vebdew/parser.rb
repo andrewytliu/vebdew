@@ -28,7 +28,7 @@ module Vebdew
     SINGLE_BAR = /^-{2,}$/
     DOUBLE_BAR = /^={2,}$/
     SHARP      = /^(#+) (.+)$/
-    UL         = /^(\*){1,2} (.+)$/
+    UL         = /^(\*{1,2}) (.+)$/
 
     def parse
       for raw_line in @lines
@@ -110,6 +110,8 @@ module Vebdew
         when UL
           close_buffer
           start_flag :ul unless @flag[:ul]
+          # fragment class for double star
+          @attrs["class"] << "fragment" if $1.size == 2
           @body << "<li#{append}>#{format_content($2)}</li>"
         else
           @buffer << raw_line

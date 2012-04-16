@@ -87,6 +87,8 @@ describe 'Parser' do
               # breaking
               [["{:.klass}![img](alt)\n\n", "* a\n"],
                ['<p><img src="img" alt="alt" class="klass"></p>', "<ul>","<li>a</li>", "</ul>"]],
+              [["** abc\n"],
+               ['<ul>','<li class="fragment">abc</li>','</ul>']]
             ]
 
 
