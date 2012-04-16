@@ -10,7 +10,7 @@ module Vebdew
       @body = []
       @footer = []
       @buffer = []
-      @attrs = ""
+      @attrs = Hash.new { |h, k| h[k] = [] }
       @flag = Hash.new { |h, k| h[k] = false }
 
       parse
@@ -28,7 +28,7 @@ module Vebdew
     SINGLE_BAR = /^-{2,}$/
     DOUBLE_BAR = /^={2,}$/
     SHARP      = /^(#+) (.+)$/
-    UL         = /^\* (.+)$/
+    UL         = /^(\*){1,2} (.+)$/
 
     def parse
       for raw_line in @lines
@@ -110,7 +110,7 @@ module Vebdew
         when UL
           close_buffer
           start_flag :ul unless @flag[:ul]
-          @body << "<li#{append}>#{format_content($1)}</li>"
+          @body << "<li#{append}>#{format_content($2)}</li>"
         else
           @buffer << raw_line
         end
@@ -184,17 +184,17 @@ module Vebdew
       id = str.scan(SEL_ID).flatten
       attrs = str.scan(SEL_ATTR)
 
-      @attrs = ""
-      @attrs += %Q{ class="#{klass.join(' ')}"} unless klass.empty?
-      @attrs += %Q{ id="#{id.join(' ')}"} unless id.empty?
+      @attrs.clear
+      @attrs["class"] += klass unless klass.empty?
+      @attrs["id"] += id unless id.empty?
       attrs.each do |a|
-        @attrs += %Q{ #{a[0]}="#{a[1]}"}
+        @attrs[a[0]] << a[1]
       end
     end
 
     def append
-      str = @attrs
-      @attrs = ""
+      str = @attrs.to_a.map{|h,k| %Q{ #{h}="#{k.join(' ')}"} }.join('')
+      @attrs.clear
       str
     end
 
@@ -237,7 +237,7 @@ module Vebdew
         when INL_IMG
           str.sub!(INL_IMG) {%Q{<img src="#{clear_esc $1}"#{append}>}}
         when INL_A
-          @attrs += ' target="_blank"' if $1.match %r{https?://}
+          @attrs["target"] << "_blank" if $1.match %r{https?://}
           str.sub!(INL_A) {%Q{<a href="#{clear_esc $1}"#{append}>#{clear_esc $3}</a>}}
         else
           break
