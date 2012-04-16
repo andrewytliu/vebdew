@@ -5,12 +5,15 @@ Converts vew files (markdown like syntax) into HTML5 slides.
 
 ## Library used
 - reveal.js: for the slides animation
+- highlight.js: for syntax highlight
 - erubis: for the template
 - htmlentities: for escaping the HTML
 
-## Install
+## Quick start
 ```
-gem install vebdew
+gem install vebdew  # install the gem
+vebdew new          # create project
+vebdew generate     # generate HTML slide
 ```
 
 ## Usage
