@@ -1,62 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Vebdew by eggegg</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Vebdew : HTML5 slide generator" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vebdew</title>
   </head>
+
   <body>
 
-      <header>
-        <h1>Vebdew</h1>
-        <p>HTML5 slide generator</p>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eggegg/vebdew">View on GitHub</a>
 
-      <div id="banner">
-        <span id="logo"></span>
+          <h1 id="project_title">Vebdew</h1>
+          <h2 id="project_tagline">HTML5 slide generator</h2>
 
-        <a href="https://github.com/eggegg/vebdew" class="button fork"><strong>Fork On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/eggegg/vebdew/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/eggegg/vebdew/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eggegg/vebdew/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eggegg/vebdew/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        <h1>vebdew</h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="vebdew" class="anchor" href="#vebdew"><span class="octicon octicon-link"></span></a>vebdew</h1>
 
 <p>A simple HTML5 slide generator.
 Converts vew files (markdown like syntax) into HTML5 slides.</p>
 
-<h2>Library used</h2>
+<h2>
+<a name="library-used" class="anchor" href="#library-used"><span class="octicon octicon-link"></span></a>Library used</h2>
 
 <ul>
 <li>reveal.js: for the slides animation</li>
 <li>erubis: for the template</li>
 <li>htmlentities: for escaping the HTML</li>
-</ul><h2>Install</h2>
+</ul><h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
 
 <pre><code>gem install vebdew
 </code></pre>
 
-<h2>Usage</h2>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Run <code>new</code> to create a new project, <code>generate</code> to convert all vew files in the project to HTML.  If you want to manually convert vew files, run <code>compile</code>.</p>
 
@@ -80,9 +75,11 @@ Commands:
            # [VEW FILE] [ERB TEMPLATE] [HTML SLIDE]
 </code></pre>
 
-<h2>Vew file syntax</h2>
+<h2>
+<a name="vew-file-syntax" class="anchor" href="#vew-file-syntax"><span class="octicon octicon-link"></span></a>Vew file syntax</h2>
 
-<h3>Head elements</h3>
+<h3>
+<a name="head-elements" class="anchor" href="#head-elements"><span class="octicon octicon-link"></span></a>Head elements</h3>
 
 <pre><code>:title &lt;Page title&gt;
 :description &lt;Description&gt;
@@ -95,26 +92,31 @@ Commands:
 <ul>
 <li>Head elements should be put on the top of the document.</li>
 <li>When any of the body elements are reached, head element is closed. That is,  is emitted and the Reveal.js body structure is established.</li>
-</ul><h3>!SLIDE, !ENDSLIDE</h3>
+</ul><h3>
+<a name="slide-endslide" class="anchor" href="#slide-endslide"><span class="octicon octicon-link"></span></a>!SLIDE, !ENDSLIDE</h3>
 
 <p>Marks the starting and ending of a slide (<code>&lt;section&gt;</code>) block.
 Current slide is closed and a new slide is created when a <code>!SLIDE</code> token is encountered. Thus the ending is not mandatory.</p>
 
-<h3>!STACK, !ENDSTACK</h3>
+<h3>
+<a name="stack-endstack" class="anchor" href="#stack-endstack"><span class="octicon octicon-link"></span></a>!STACK, !ENDSTACK</h3>
 
 <p>Marks the starting and ending of a stack (vertical slide stack). Rules are the same as <code>!SLIDE</code> and <code>!ENDSLIDE</code>.</p>
 
-<h3>Code spans &amp; code blocks</h3>
+<h3>
+<a name="code-spans--code-blocks" class="anchor" href="#code-spans--code-blocks"><span class="octicon octicon-link"></span></a>Code spans &amp; code blocks</h3>
 
 <p>Code spans are wrapped by backticks. This emits a <code>&lt;code&gt;</code> block. Brackets (&lt;, &gt;) are escaped to &lt; and &gt; automatically. Escaptions are available in code spans.</p>
 
 <p>Two types of code blocks are supported here. The code blocks wrapped in three or more backticks. This kind of code blocks emits <code>&lt;code&gt;...&lt;/code&gt;</code>. The second kind is wrapped in three or more <code>~</code>s. This kind of code blocks emits <code>&lt;script type="text/x-sample"&gt;...&lt;/script&gt;</code>, which makes uses of sample.js.</p>
 
-<h3>HTML elements</h3>
+<h3>
+<a name="html-elements" class="anchor" href="#html-elements"><span class="octicon octicon-link"></span></a>HTML elements</h3>
 
 <p>HTML tags are allowed in the syntax and is outputted as-is. Since we do not have any token that emits custom <code>&lt;div&gt;</code>, one can write <code>&lt;div class="whatever" id="they-want"&gt;&lt;/div&gt;</code> in vebdew directly.</p>
 
-<h3>Headers</h3>
+<h3>
+<a name="headers" class="anchor" href="#headers"><span class="octicon octicon-link"></span></a>Headers</h3>
 
 <p>The following syntaxes are allowed:</p>
 
@@ -130,15 +132,18 @@ H2 Header
 ---------
 </code></pre>
 
-<h3>Horizontal Rules</h3>
+<h3>
+<a name="horizontal-rules" class="anchor" href="#horizontal-rules"><span class="octicon octicon-link"></span></a>Horizontal Rules</h3>
 
 <p>Three or more <code>-</code> in a row with a leading and trailing blank line emits a <code>&lt;hr&gt;</code> tag.</p>
 
-<h3>Paragraphs</h3>
+<h3>
+<a name="paragraphs" class="anchor" href="#paragraphs"><span class="octicon octicon-link"></span></a>Paragraphs</h3>
 
 <p>Lines with leading and trailing blank lines, if not matched by any of the rules above, are treated as a paragraph. (p element).</p>
 
-<h3>Attributes</h3>
+<h3>
+<a name="attributes" class="anchor" href="#attributes"><span class="octicon octicon-link"></span></a>Attributes</h3>
 
 <p>CSS-Selector like decorators can be appended to any of the elements above. The syntax is like:</p>
 
@@ -167,19 +172,25 @@ Introducing HTML
 <pre><code>&lt;code&gt;&amp;lt;input&amp;gt;&lt;/code&gt; tag has an attribute called &lt;code class="attr" title="checkbox|radio|submit"&gt;type&lt;/code&gt;
 </code></pre>
 
-<h2>Copyright</h2>
+<h2>
+<a name="copyright" class="anchor" href="#copyright"><span class="octicon octicon-link"></span></a>Copyright</h2>
 
 <p>Release under MIT license.</p>
 
 <p>Copyright (c) 2012 Andrew Liu. See LICENSE.txt for
 further details.</p>
       </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/eggegg">eggegg</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Vebdew maintained by <a href="https://github.com/eggegg">eggegg</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+
     
+
   </body>
 </html>
